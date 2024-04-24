@@ -1,0 +1,7 @@
+{
+    "require-dev": {
+        "mockery/mockery": "^1.6",
+        "phpunit/phpunit": "^11.1",
+        "phpunit/dbunit": "^1.3"
+    }
+}

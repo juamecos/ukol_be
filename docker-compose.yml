@@ -1,0 +1,57 @@
+version: "3.8"
+services:
+
+  # PHP Service
+  php:
+    build: './php_docker/'
+    volumes:
+      - ./www/:/var/www/html/
+    networks:
+      - app-network
+
+  # Apache Service
+  apache:
+    build: './apache_docker/'
+    depends_on:
+      - php
+    ports:
+      - "80:80"
+    volumes:
+      - ./www/:/var/www/html/
+    networks:
+      - app-network
+
+  # MariaDB Service
+  mariadb:
+    image: mariadb:10.11
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+      - mysqldata:/var/lib/mysql
+    networks:
+      - app-network
+
+  # phpMyAdmin Service
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: ${PMA_HOST}
+    depends_on:
+      - mariadb
+    networks:
+      - app-network
+
+# Volumes
+volumes:
+  mysqldata:
+
+  #networks
+networks:
+  app-network:
+    driver: bridge
