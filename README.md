@@ -13,8 +13,8 @@ Endpoint for API REST
 1. **Clone the repository**
 
    ```bash
-   git clone [your-repository-url]
-   cd [repository-name]
+   git clone https://github.com/juamecos/ukol_be.git
+   cd ukol_be.git
 2. **Create environment file**
 Copy the example environment file and modify according to your needs:
 
